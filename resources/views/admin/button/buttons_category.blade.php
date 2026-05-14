@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Button Categories | Silai Point </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('design/images/favicon.ico') }}">
+
+    <!-- Vector Maps css -->
+    <link href="{{ asset('design/vendor/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Theme Config Js -->
+    <script src="{{ asset('design/js/config.js') }}"></script>
+
+    <!-- Vendor css -->
+    <link href="{{ asset('design/css/vendor.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- App css -->
+    <link href="{{ asset('design/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
+
+    <!-- Icons css -->
+    <link href="{{ asset('design/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <!-- Begin page -->
+    <div class="wrapper">
+
+        
+        <!-- Sidenav Menu Start -->
+        @include('admin.partials.sidebar')
+        <!-- Sidenav Menu End -->
+        
+
+        <!-- Topbar Start -->
+        @include('admin.partials.topbar')
+        <!-- Topbar End -->
+
+        <!-- Search Modal -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content bg-transparent">
+                    <form>
+                        <div class="card mb-1">
+                            <div class="px-3 py-2 d-flex flex-row align-items-center" id="top-search">
+                                <i class="ti ti-search fs-22"></i>
+                                <input type="search" class="form-control border-0" id="search-modal-input" placeholder="Search for actions, people,">
+                                <button type="submit" class="btn p-0" data-bs-dismiss="modal" aria-label="Close">[esc]</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+        <div class="page-content">
+            <div class="page-container">
+
+                
+                <div class="page-title-head d-flex align-items-center gap-2">
+                    <div class="flex-grow-1">
+                        <h4 class="fs-16 text-uppercase fw-bold mb-0">Button Categories</h4>
+                    </div>
+
+                    <div class="text-end">
+                        <ol class="breadcrumb m-0 py-0 fs-13">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Greeva</a></li>
+                            
+                            <li class="breadcrumb-item active">Button Categories</li>
+                        </ol>
+                    </div>
+                </div>
+                
+
+                
+
+                <div class="row">
+
+    <!-- LEFT SIDE FORM -->
+    <div class="col-xl-4">
+
+        <div class="card">
+
+            <div class="card-header border-bottom border-dashed">
+                <h4 class="header-title mb-0">
+                    Add Button Category
+                </h4>
+            </div>
+
+            <div class="card-body">
+
+                <form action="{{ route('button-category.store') }}"
+                      method="POST"
+                      enctype="multipart/form-data">
+
+                    @csrf
+
+                    <!-- NAME -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Category Name
+                        </label>
+
+                        <input type="text"
+                               name="name"
+                               class="form-control"
+                               placeholder="Enter Category Name"
+                               required>
+                    </div>
+
+                    <!-- IMAGE -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Category Image
+                        </label>
+
+                        <input type="file"
+                               name="image"
+                               class="form-control">
+                    </div>
+
+                    <!-- DESCRIPTION -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Description
+                        </label>
+
+                        <textarea name="description"
+                                  rows="4"
+                                  class="form-control"
+                                  placeholder="Enter Description"></textarea>
+                    </div>
+
+                    <!-- STATUS -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Status
+                        </label>
+
+                        <select name="status" class="form-select">
+
+                            <option value="1">
+                                Active
+                            </option>
+
+                            <option value="0">
+                                Inactive
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <!-- BUTTON -->
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-success">
+
+                            Add Category
+
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE TABLE -->
+    <div class="col-xl-8">
+
+        <div class="card">
+
+            <div class="card-header border-bottom border-dashed d-flex align-items-center justify-content-between">
+
+                <h4 class="header-title mb-0">
+                    Button Category List
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-striped align-middle">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th width="5%">#</th>
+
+                                <th width="15%">
+                                    Image
+                                </th>
+
+                                <th width="20%">
+                                    Category Name
+                                </th>
+
+                                <th width="30%">
+                                    Description
+                                </th>
+
+                                <th width="10%">
+                                    Status
+                                </th>
+
+                                <th width="20%" class="text-center">
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @forelse($categories as $category)
+
+                            <tr>
+
+                                <!-- ID -->
+                                <td>
+                                    {{ $loop->iteration }}
+                                </td>
+
+                             <td>
+
+    @if($category->image)
+
+        <img src="{{ asset('uploads/button_categories/' . $category->image) }}"
+             width="60"
+             height="60"
+             class="rounded border"
+             style="object-fit: cover;">
+
+    @else
+
+        <span class="badge bg-secondary">
+            No Image
+        </span>
+
+    @endif
+
+</td>
+
+                                <!-- NAME -->
+                                <td>
+
+                                    <strong>
+                                        {{ $category->name }}
+                                    </strong>
+
+                                </td>
+
+                                <!-- DESCRIPTION -->
+                                <td>
+
+                                    {{ Str::limit($category->description, 60) }}
+
+                                </td>
+
+                                <!-- STATUS -->
+                                <td>
+
+                                    @if($category->status == 1)
+
+                                        <span class="badge bg-success">
+                                            Active
+                                        </span>
+
+                                    @else
+
+                                        <span class="badge bg-danger">
+                                            Inactive
+                                        </span>
+
+                                    @endif
+
+                                </td>
+
+                                <!-- ACTION -->
+                                <td class="text-center">
+
+                                    <!-- EDIT BUTTON -->
+                                    <a href="javascript:void(0);"
+                                       class="btn btn-sm btn-primary"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#editModal{{ $category->id }}">
+
+                                        <i class="ti ti-pencil"></i>
+
+                                    </a>
+
+                                    <!-- DELETE FORM -->
+                                    <form action="{{ route('button-category.destroy', $category->id) }}"
+                                          method="POST"
+                                          class="d-inline">
+
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit"
+                                                class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Are you sure to delete this category?')">
+
+                                            <i class="ti ti-trash"></i>
+
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- EDIT MODAL -->
+                            <div class="modal fade"
+                                 id="editModal{{ $category->id }}"
+                                 tabindex="-1">
+
+                                <div class="modal-dialog modal-lg">
+
+                                    <div class="modal-content">
+
+                                        <form action="{{ route('button-category.update', $category->id) }}"
+                                              method="POST"
+                                              enctype="multipart/form-data">
+
+                                            @csrf
+
+                                            <div class="modal-header">
+
+                                                <h5 class="modal-title">
+                                                    Edit Button Category
+                                                </h5>
+
+                                                <button type="button"
+                                                        class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+
+                                            </div>
+
+                                            <div class="modal-body">
+
+                                                <!-- NAME -->
+                                                <div class="mb-3">
+
+                                                    <label class="form-label">
+                                                        Category Name
+                                                    </label>
+
+                                                    <input type="text"
+                                                           name="name"
+                                                           class="form-control"
+                                                           value="{{ $category->name }}"
+                                                           required>
+
+                                                </div>
+
+                                                <!-- DESCRIPTION -->
+                                                <div class="mb-3">
+
+                                                    <label class="form-label">
+                                                        Description
+                                                    </label>
+
+                                                    <textarea name="description"
+                                                              class="form-control"
+                                                              rows="4">{{ $category->description }}</textarea>
+
+                                                </div>
+
+                                                <!-- IMAGE -->
+                                                <div class="mb-3">
+
+                                                    <label class="form-label">
+                                                        Category Image
+                                                    </label>
+
+                                                    <input type="file"
+                                                           name="image"
+                                                           class="form-control">
+
+                                                    @if($category->image)
+
+                                                        <img src="{{ asset('uploads/button_categories/' . $category->image) }}"
+                                                             width="80"
+                                                             class="mt-2 rounded border">
+
+                                                    @endif
+
+                                                </div>
+
+                                                <!-- STATUS -->
+                                                <div class="mb-3">
+
+                                                    <label class="form-label">
+                                                        Status
+                                                    </label>
+
+                                                    <select name="status"
+                                                            class="form-select">
+
+                                                        <option value="1"
+                                                            {{ $category->status == 1 ? 'selected' : '' }}>
+                                                            Active
+                                                        </option>
+
+                                                        <option value="0"
+                                                            {{ $category->status == 0 ? 'selected' : '' }}>
+                                                            Inactive
+                                                        </option>
+
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="modal-footer">
+
+                                                <button type="button"
+                                                        class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+
+                                                    Close
+
+                                                </button>
+
+                                                <button type="submit"
+                                                        class="btn btn-success">
+
+                                                    Update Category
+
+                                                </button>
+
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            @empty
+
+                            <tr>
+
+                                <td colspan="6"
+                                    class="text-center text-muted py-4">
+
+                                    No Button Categories Found
+
+                                </td>
+
+                            </tr>
+
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+                <!-- end row-->
+
+            </div> <!-- container -->
+
+            <!-- Footer Start -->
+            <footer class="footer">
+                <div class="page-container">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start">
+                            <script>document.write(new Date().getFullYear())</script> © Greeva - By <span class="fw-bold text-decoration-underline text-uppercase text-reset fs-12">Coderthemes</span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-md-end footer-links d-none d-md-block">
+                                <a href="javascript: void(0);">About</a>
+                                <a href="javascript: void(0);">Support</a>
+                                <a href="javascript: void(0);">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- end Footer -->
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+    </div>
+    <!-- END wrapper -->
+
+    <!-- Theme Settings -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="theme-settings-offcanvas">
+        <div class="d-flex align-items-center gap-2 px-3 py-3 offcanvas-header border-bottom border-dashed">
+            <h5 class="flex-grow-1 mb-0">Theme Settings</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body p-0 h-100" data-simplebar>
+            <div class="p-3 border-bottom border-dashed">
+                <h5 class="mb-3 fs-16 fw-bold">Color Scheme</h5>
+
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-check card-radio">
+                            <input class="form-check-input" type="radio" name="data-bs-theme" id="layout-color-light" value="light">
+                            <label class="form-check-label p-3 w-100 d-flex justify-content-center align-items-center" for="layout-color-light">
+                                <iconify-icon icon="solar:sun-bold-duotone" class="fs-32 text-muted"></iconify-icon>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Light</h5>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-check card-radio">
+                            <input class="form-check-input" type="radio" name="data-bs-theme" id="layout-color-dark" value="dark">
+                            <label class="form-check-label p-3 w-100 d-flex justify-content-center align-items-center" for="layout-color-dark">
+                                <iconify-icon icon="solar:cloud-sun-2-bold-duotone" class="fs-32 text-muted"></iconify-icon>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Dark</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 border-bottom border-dashed">
+                <h5 class="mb-3 fs-16 fw-bold">Layout Mode</h5>
+
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-check card-radio">
+                            <input class="form-check-input" type="radio" name="data-layout-mode" id="layout-mode-fluid" value="fluid">
+                            <label class="form-check-label p-0 avatar-xl w-100" for="layout-mode-fluid">
+                                <div>
+                                    <span class="d-flex h-100">
+                                        <span class="flex-shrink-0">
+                                            <span class="bg-light d-flex h-100 border-end flex-column p-1 px-2">
+                                                <span class="d-block p-1 bg-dark-subtle rounded mb-1"></span>
+                                                <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                                <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                                <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                                <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            </span>
+                                        </span>
+                                        <span class="flex-grow-1">
+                                            <span class="d-flex h-100 flex-column rounded-2">
+                                                <span class="bg-light d-block p-1"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <span class="d-flex h-100 flex-column">
+                                        <span class="bg-light d-flex p-1 align-items-center border-bottom border-secondary border-opacity-25">
+                                            <span class="d-block p-1 bg-dark-subtle rounded me-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded ms-auto"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded ms-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded ms-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded ms-1"></span>
+                                        </span>
+                                        <span class="bg-light d-block p-1"></span>
+                                    </span>
+                                </div>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Fluid</h5>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-layout-mode" id="data-layout-detached" value="detached">
+                            <label class="form-check-label p-0 avatar-xl w-100" for="data-layout-detached">
+                                <span class="d-flex h-100 flex-column">
+                                    <span class="bg-light d-flex p-1 align-items-center border-bottom ">
+                                        <span class="d-block p-1 bg-dark-subtle rounded me-1"></span>
+                                        <span class="d-block border border-3 border-secondary border-opacity-25 rounded ms-auto"></span>
+                                        <span class="d-block border border-3 border-secondary border-opacity-25 rounded ms-1"></span>
+                                        <span class="d-block border border-3 border-secondary border-opacity-25 rounded ms-1"></span>
+                                        <span class="d-block border border-3 border-secondary border-opacity-25 rounded ms-1"></span>
+                                    </span>
+                                    <span class="d-flex h-100 p-1 px-2">
+                                        <span class="flex-shrink-0">
+                                            <span class="bg-light d-flex h-100 flex-column p-1 px-2">
+                                                <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                                <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                                <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span class="bg-light d-block p-1 mt-auto px-2"></span>
+                                </span>
+
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Detached</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 border-bottom border-dashed">
+                <h5 class="mb-3 fs-16 fw-bold">Topbar Color</h5>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-check card-radio">
+                            <input class="form-check-input" type="radio" name="data-topbar-color" id="topbar-color-light" value="light">
+                            <label class="form-check-label p-0 avatar-lg w-100 bg-light" for="topbar-color-light">
+                                <span class="d-flex align-items-center justify-content-center h-100">
+                                    <span class="p-2 d-inline-flex shadow rounded-circle bg-white"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Light</h5>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="form-check card-radio">
+                            <input class="form-check-input" type="radio" name="data-topbar-color" id="topbar-color-dark" value="dark">
+                            <label class="form-check-label p-0 avatar-lg w-100 bg-light" for="topbar-color-dark">
+                                <span class="d-flex align-items-center justify-content-center h-100">
+                                    <span class="p-2 d-inline-flex shadow rounded-circle bg-dark"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Dark</h5>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="form-check card-radio">
+                            <input class="form-check-input" type="radio" name="data-topbar-color" id="topbar-color-brand" value="brand">
+                            <label class="form-check-label p-0 avatar-lg w-100 bg-light" for="topbar-color-brand">
+                                <span class="d-flex align-items-center justify-content-center h-100">
+                                    <span class="p-2 d-inline-flex shadow rounded-circle bg-primary"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Gradient</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 border-bottom border-dashed">
+                <h5 class="mb-3 fs-16 fw-bold">Menu Color</h5>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-menu-color" id="sidenav-color-light" value="light">
+                            <label class="form-check-label p-0 avatar-lg w-100 bg-light" for="sidenav-color-light">
+                                <span class="d-flex align-items-center justify-content-center h-100">
+                                    <span class="p-2 d-inline-flex shadow rounded-circle bg-white"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Light</h5>
+                    </div>
+
+                    <div class="col-3" style="--ct-dark-rgb: 64,73,84;">
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-menu-color" id="sidenav-color-dark" value="dark">
+                            <label class="form-check-label p-0 avatar-lg w-100 bg-light" for="sidenav-color-dark">
+                                <span class="d-flex align-items-center justify-content-center h-100">
+                                    <span class="p-2 d-inline-flex shadow rounded-circle bg-dark"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Dark</h5>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-menu-color" id="sidenav-color-brand" value="brand">
+                            <label class="form-check-label p-0 avatar-lg w-100 bg-light" for="sidenav-color-brand">
+                                <span class="d-flex align-items-center justify-content-center h-100">
+                                    <span class="p-2 d-inline-flex shadow rounded-circle bg-primary"></span>
+                                </span>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Brand</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 .border-bottom .border-dashed">
+                <h5 class="mb-3 fs-16 fw-bold">Sidebar Size</h5>
+
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-sidenav-size" id="sidenav-size-default" value="default">
+                            <label class="form-check-label p-0 avatar-xl w-100" for="sidenav-size-default">
+                                <span class="d-flex h-100">
+                                    <span class="flex-shrink-0">
+                                        <span class="bg-light d-flex h-100 border-end  flex-column p-1 px-2">
+                                            <span class="d-block p-1 bg-dark-subtle rounded mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                        </span>
+                                    </span>
+                                    <span class="flex-grow-1">
+                                        <span class="d-flex h-100 flex-column">
+                                            <span class="bg-light d-block p-1"></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Default</h5>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-sidenav-size" id="sidenav-size-compact" value="compact">
+                            <label class="form-check-label p-0 avatar-xl w-100" for="sidenav-size-compact">
+                                <span class="d-flex h-100">
+                                    <span class="flex-shrink-0">
+                                        <span class="bg-light d-flex h-100 border-end  flex-column p-1">
+                                            <span class="d-block p-1 bg-dark-subtle rounded mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                        </span>
+                                    </span>
+                                    <span class="flex-grow-1">
+                                        <span class="d-flex h-100 flex-column">
+                                            <span class="bg-light d-block p-1"></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Compact</h5>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-sidenav-size" id="sidenav-size-small" value="condensed">
+                            <label class="form-check-label p-0 avatar-xl w-100" for="sidenav-size-small">
+                                <span class="d-flex h-100">
+                                    <span class="flex-shrink-0">
+                                        <span class="bg-light d-flex h-100 border-end flex-column" style="padding: 2px;">
+                                            <span class="d-block p-1 bg-dark-subtle rounded mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                        </span>
+                                    </span>
+                                    <span class="flex-grow-1">
+                                        <span class="d-flex h-100 flex-column">
+                                            <span class="bg-light d-block p-1"></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Condensed</h5>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-sidenav-size" id="sidenav-size-small-hover" value="sm-hover">
+                            <label class="form-check-label p-0 avatar-xl w-100" for="sidenav-size-small-hover">
+                                <span class="d-flex h-100">
+                                    <span class="flex-shrink-0">
+                                        <span class="bg-light d-flex h-100 border-end flex-column" style="padding: 2px;">
+                                            <span class="d-block p-1 bg-dark-subtle rounded mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                            <span class="d-block border border-3 border-secondary border-opacity-25 rounded w-100 mb-1"></span>
+                                        </span>
+                                    </span>
+                                    <span class="flex-grow-1">
+                                        <span class="d-flex h-100 flex-column">
+                                            <span class="bg-light d-block p-1"></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Hover View</h5>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-sidenav-size" id="sidenav-size-full" value="full">
+                            <label class="form-check-label p-0 avatar-xl w-100" for="sidenav-size-full">
+                                <span class="d-flex h-100">
+                                    <span class="flex-shrink-0">
+                                        <span class="d-flex h-100 flex-column">
+                                            <span class="d-block p-1 bg-dark-subtle mb-1"></span>
+                                        </span>
+                                    </span>
+                                    <span class="flex-grow-1">
+                                        <span class="d-flex h-100 flex-column">
+                                            <span class="bg-light d-block p-1"></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Full Layout</h5>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-check sidebar-setting card-radio">
+                            <input class="form-check-input" type="radio" name="data-sidenav-size" id="sidenav-size-fullscreen" value="fullscreen">
+                            <label class="form-check-label p-0 avatar-xl w-100" for="sidenav-size-fullscreen">
+                                <span class="d-flex h-100">
+                                    <span class="flex-grow-1">
+                                        <span class="d-flex h-100 flex-column">
+                                            <span class="bg-light d-block p-1"></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                        <h5 class="fs-14 text-center text-muted mt-2">Hidden</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 border-bottom border-dashed d-none">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="fs-16 fw-bold mb-0">Container Width</h5>
+
+                    <div class="btn-group radio" role="group">
+                        <input type="radio" class="btn-check" name="data-container-position" id="container-width-fixed" value="fixed">
+                        <label class="btn btn-sm btn-soft-primary w-sm" for="container-width-fixed">Full</label>
+
+                        <input type="radio" class="btn-check" name="data-container-position" id="container-width-scrollable" value="scrollable">
+                        <label class="btn btn-sm btn-soft-primary w-sm ms-0" for="container-width-scrollable">Boxed</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 border-bottom border-dashed d-none">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="fs-16 fw-bold mb-0">Layout Position</h5>
+
+                    <div class="btn-group radio" role="group">
+                        <input type="radio" class="btn-check" name="data-layout-position" id="layout-position-fixed" value="fixed">
+                        <label class="btn btn-sm btn-soft-primary w-sm" for="layout-position-fixed">Fixed</label>
+
+                        <input type="radio" class="btn-check" name="data-layout-position" id="layout-position-scrollable" value="scrollable">
+                        <label class="btn btn-sm btn-soft-primary w-sm ms-0" for="layout-position-scrollable">Scrollable</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2 px-3 py-2 offcanvas-header border-top border-dashed">
+            <button type="button" class="btn w-50 btn-soft-danger" id="reset-layout">Reset</button>
+            <button type="button" class="btn w-50 btn-soft-info">Buy Now</button>
+        </div>
+
+    </div>
+
+    <!-- Vendor js -->
+    <script src="{{ asset('design/js/vendor.min.js') }}"></script>
+
+    <!-- App js -->
+    <script src="{{ asset('design/js/app.js') }}"></script>
+
+    <!-- Apex Chart js -->
+    <script src="{{ asset('design/vendor/apexcharts/apexcharts.min.js') }}"></script>
+
+    <!-- Vector Map Js -->
+    <script src="{{ asset('design/vendor/jsvectormap/jsvectormap.min.js') }}"></script>
+    <script src="{{ asset('design/vendor/jsvectormap/maps/world-merc.js') }}"></script>
+    <script src="{{ asset('design/vendor/jsvectormap/maps/world.js') }}"></script>
+
+    <!-- Projects Analytics Dashboard App js -->
+    <script src="{{ asset('design/js/pages/dashboard.js') }}"></script>
+
+</body>
+
+</html>
